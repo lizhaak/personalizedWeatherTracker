@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="header1">Weather App</h1>
+  <div class="form-inline" id='inputSection'>
+    <div class="form-group">
+      <label for="">Find a City:</label>
+      <input type="text" class="form-control" id="newCity" placeholder="City">
+    </div>
+    <button type="submit" id="addCity" class="btn btn-default">Find</button>
+  </div>
+
+  <div class="container-fluid" id="prevCities">
+    <div class="row card" id="template">
+          <div class="prevNameOfCity col-xs-4 col-md-3 col-md-offset-3">Minneapolis</div>
+          <img class="icon col-xs-2 col-xs-offset-4 col-md-2 col-md-offset-2" src="http://openweathermap.org/img/w/11d.png"/>
+          <div class="preTemp col-xs-2 col-xs-offset-0 col-md-2 col-md-offset-0 text-right"><span id="prevTemp">45</span> °F</div>
+
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
