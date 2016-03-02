@@ -55,8 +55,6 @@ function prevWeatherCard(data){
   var iconID = data.weather[0]['icon'];
   console.log('iconID', iconID);
   $card.find('.icon').attr("src", `http://openweathermap.org/img/w/${iconID}.png`);
-
-  //$('#imbdID').text("IMBd ID: " + `http://www.imdb.com/title/${imbdID}`).attr(href, `http://www.imdb.com/title/${imbdID}`);
   $card.find('#prevTemp').text(Math.floor(data.main['temp']));
   $('#prevCities').append($card);
 }
@@ -67,18 +65,6 @@ function loadFromLocalStorage(){
   }
   cities = JSON.parse(localStorage.cities);
   citiesInit(0);
-  // for(var i = 0; i < cities.length; i++){
-  //   var $prevCityName = cities[i];
-  //   prevCityRequest($prevCityName);
-  // }
-  // console.log('$prevCityName', $prevCityName);
-  // for(var key of cities){
-  //   console.log('key', key);
-  //   console.log('key.name', key.name);
-  //   console.log('key.temp', key.temp);
-  //   prevCityRequest(cities);
-  // }
-
 }
 
 function citiesInit(cityID) {
@@ -91,22 +77,12 @@ function citiesInit(cityID) {
         prevWeatherCard(weather);
         if(cityID < cities.length - 1){
           citiesInit(cityID + 1);
-        }
-        
+        }  
     },
     error: function () {
       console.log('error!');
     }
   });
-
-  // $.get({
-  //   url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=38f758398b969dbe1c4c60ee16c5e6ff`
-  // })
-  //do an ajax thing
-  /*
-  .done {
-  }
-  */
 }
 
 function saveToLocalStorage() {

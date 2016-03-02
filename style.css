@@ -9,7 +9,7 @@
 }
 
 #template {
-  display n:one;
+  display: none;
 }
 
 .header1 {
@@ -24,3 +24,17 @@ img {
   max-width: 100px;
   height: 60px;
 }
+
+.remove {
+  width: 60px;
+  background-color: red;
+  height: 42px;
+  border-radius: 40%;
+  border: 1px solid grey;
+
+}
+
+.delete {
+  color: white;
+}
+
