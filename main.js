@@ -4,11 +4,11 @@ var cities;
 var prevCityName;
 
 $(function(){
-  //prevCityRequest
   loadFromLocalStorage();
   $('#addCity').click(addCity);
   //$('#addCity').click(sendNewRequest);
   $('#addCity').click(prevCityRequest);
+  $('#prevCities').on("click", ".remove", removeCity);
 });
 
 // function sendNewRequest(){            // new request to get the 5 day forecast
@@ -30,30 +30,39 @@ $(function(){
 //   console.log('send');
 // }
 
+function removeCity(e){
+  e.preventDefault();
+  var city = this.closest('div').getElementsByClassName('prevNameOfCity')[0].innerHTML;
+
+  for(var i = 0; i < cities.length; i++) {
+    if(city === cities[i]){
+      cities.splice(i, 1);
+    }
+  }
+  saveToLocalStorage();
+  $(this).closest('.row')[0].remove();
+}
+
 function prevCityRequest(prevName){
   $.ajax({
     method: 'GET',
     url: `http://api.openweathermap.org/data/2.5/weather?q=${prevName}&units=imperial&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
     success: function(weather) {
-        prevWeatherCard(weather);
-        
+      prevWeatherCard(weather);
+
     },
     error: function () {
       console.log('error!');
     }
   });
-  console.log('send');   //need to remove or do something with this.
+
 }
 
 function prevWeatherCard(data){
-  console.log('data:', data);
   var $card = $('#template').clone().addClass('card row');
   $card.removeAttr('id');
-  console.log('data.name: ', data.name);
-  console.log('data.main.temp:', data.main['temp']);
   $card.find('.prevNameOfCity').text(data.name);
   var iconID = data.weather[0]['icon'];
-  console.log('iconID', iconID);
   $card.find('.icon').attr("src", `http://openweathermap.org/img/w/${iconID}.png`);
   $card.find('#prevTemp').text(Math.floor(data.main['temp']));
   $('#prevCities').append($card);
@@ -69,25 +78,28 @@ function loadFromLocalStorage(){
 
 function citiesInit(cityID) {
   var city = cities[cityID];
+  if(city !== undefined){
 
- $.ajax({
+   $.ajax({
     method: 'GET',
     url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
     success: function(weather) {
-        prevWeatherCard(weather);
-        if(cityID < cities.length - 1){
-          citiesInit(cityID + 1);
-        }  
+      prevWeatherCard(weather);
+      if(cityID < cities.length - 1){
+        citiesInit(cityID + 1);
+      }  
     },
     error: function () {
       console.log('error!');
     }
   });
+ }
 }
 
 function saveToLocalStorage() {
   localStorage.cities = JSON.stringify(cities);
 }
+
 
 function addCity(e) {
   e.preventDefault();
