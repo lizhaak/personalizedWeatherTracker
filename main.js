@@ -7,7 +7,7 @@ $(function(){
   loadFromLocalStorage();
   $('#addCity').click(addCity);
   //$('#addCity').click(sendNewRequest);
-  $('#addCity').click(prevCityRequest);
+  //$('#addCity').click(prevCityRequest);
   $('#prevCities').on("click", ".remove", removeCity);
 });
 
@@ -20,6 +20,7 @@ $(function(){
 //     url: `http://api.openweathermap.org/data/2.5/forecast?q=${$newCity},us&&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
 //     success: function(weather5Day) {
 //       console.log('weather5Day:', weather5Day);
+//       prevWeatherCard(weather5Day);
 //     },
 //     error: function () {
 //       console.log('error!');
@@ -67,7 +68,7 @@ function prevWeatherCard(data){
   var iconID = data.weather[0]['icon'];
   $card.find('.icon').attr("src", `http://openweathermap.org/img/w/${iconID}.png`);
   $card.find('#prevTemp').text(Math.floor(data.main['temp']));
-  $('#prevCities').append($card);
+  $('#prevCities').prepend($card);
 }
 
 function loadFromLocalStorage(){
@@ -107,6 +108,7 @@ function addCity(e) {
   e.preventDefault();
   var newCity = $('#newCity').val();
   cities.push(newCity);
+  prevCityRequest(newCity);
   saveToLocalStorage();
-  console.log('localStorage.cities:', localStorage.cities);
+  $('#newCity').val('');
 }
