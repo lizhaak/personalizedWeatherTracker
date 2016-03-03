@@ -7,29 +7,9 @@ $(function(){
   loadFromLocalStorage();
   $('#addCity').click(addCity);
   //$('#addCity').click(sendNewRequest);
-  //$('#addCity').click(prevCityRequest);
+  $('#prevCities').on("click", '.fullForecast', forecastRequest);
   $('#prevCities').on("click", ".remove", removeCity);
 });
-
-// function sendNewRequest(){            // new request to get the 5 day forecast
-//   var $newCity = $('#newCity').val();
-//   console.log('$newCity', $newCity);
-
-//   $.ajax({
-//     method: 'GET',
-//     url: `http://api.openweathermap.org/data/2.5/forecast?q=${$newCity},us&&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
-//     success: function(weather5Day) {
-//       console.log('weather5Day:', weather5Day);
-//       prevWeatherCard(weather5Day);
-//     },
-//     error: function () {
-//       console.log('error!');
-//     }
-
-//   });
-
-//   console.log('send');
-// }
 
 function removeCity(e){
   e.preventDefault();
@@ -46,18 +26,61 @@ function removeCity(e){
   $(this).closest('.row')[0].remove();
 }
 
-function prevCityRequest(prevName){
-  $.ajax({
-    method: 'GET',
-    url: `http://api.openweathermap.org/data/2.5/weather?q=${prevName}&units=imperial&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
-    success: function(weather) {
-      prevWeatherCard(weather);
+function forecastRequest(e){
+  e.preventDefault();
+  var city = this.closest('div').getElementsByClassName('prevNameOfCity')[0].innerHTML;
+  var $this = $(this);
+  (console.log('city', city));
 
+  $.ajax({                          // 3 day forecast data
+    method: 'GET',
+    url: `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&units=imperial&cnt=3&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
+    success: function(weather3Days) {
+      console.log('weather3Days:', weather3Days);
+      weather3DaysCard(weather3Days, $this);
     },
     error: function () {
       console.log('error!');
     }
   });
+}
+
+function prevCityRequest(prevName){
+  $.ajax({                          // current weather data
+    method: 'GET',
+    url: `http://api.openweathermap.org/data/2.5/weather?q=${prevName}&units=imperial&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
+    success: function(currentWeather) {
+      prevWeatherCard(currentWeather);
+    },
+    error: function () {
+      console.log('error!');
+    }
+  });
+}
+
+function weather3DaysCard(data, $this){
+  if($this.closest(".card").find(".threeDaysForecast").length === 0) {
+    var $card = $('#template3').clone().addClass('row threeDaysForecast');
+    $card.removeAttr('id');
+
+    $card.find('.minTemp1').text(Math.floor(data.list[0]['temp']['min']));
+    $card.find('.maxTemp1').text(Math.floor(data.list[0]['temp']['max']));
+    var iconID1 = data.list[0]['weather'][0]['icon'];
+    $card.find('.icon1').attr("src", `http://openweathermap.org/img/w/${iconID1}.png`);
+
+    $card.find('.minTemp2').text(Math.floor(data.list[1]['temp']['min']));
+    $card.find('.maxTemp2').text(Math.floor(data.list[1]['temp']['max']));
+    var iconID2 = data.list[1]['weather'][0]['icon'];
+    $card.find('.icon2').attr("src", `http://openweathermap.org/img/w/${iconID2}.png`);
+
+    $card.find('.minTemp3').text(Math.floor(data.list[2]['temp']['min']));
+    $card.find('.maxTemp3').text(Math.floor(data.list[2]['temp']['max']));
+    var iconID3 = data.list[2]['weather'][0]['icon'];
+    $card.find('.icon3').attr("src", `http://openweathermap.org/img/w/${iconID3}.png`);
+    $this.closest(".card").find(".fcW").append($card); 
+  } else {
+    $this.closest('.card').find('.threeDaysForecast').toggleClass('hidden');
+  }
 
 }
 
@@ -82,7 +105,6 @@ function loadFromLocalStorage(){
 function citiesInit(cityID) {
   var city = cities[cityID];
   if(city !== undefined){
-
    $.ajax({
     method: 'GET',
     url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
@@ -103,12 +125,14 @@ function saveToLocalStorage() {
   localStorage.cities = JSON.stringify(cities);
 }
 
-
 function addCity(e) {
   e.preventDefault();
   var newCity = $('#newCity').val();
-  cities.push(newCity);
-  prevCityRequest(newCity);
-  saveToLocalStorage();
-  $('#newCity').val('');
+  if(cities.indexOf(newCity) === -1 ){
+    cities.push(newCity);
+    prevCityRequest(newCity);
+
+    saveToLocalStorage();
+    $('#newCity').val('');
+  }
 }
