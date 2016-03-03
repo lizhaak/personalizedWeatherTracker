@@ -34,11 +34,13 @@ function removeCity(e){
   e.preventDefault();
   var city = this.closest('div').getElementsByClassName('prevNameOfCity')[0].innerHTML;
 
+  console.log("index:", cities.indexOf(city));
   for(var i = 0; i < cities.length; i++) {
-    if(city === cities[i]){
+    if(city.toLowerCase() === cities[i].toLowerCase()){
       cities.splice(i, 1);
     }
   }
+  console.log('cities', cities);
   saveToLocalStorage();
   $(this).closest('.row')[0].remove();
 }
