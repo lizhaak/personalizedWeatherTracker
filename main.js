@@ -6,7 +6,6 @@ var prevCityName;
 $(function(){
   loadFromLocalStorage();
   $('#addCity').click(addCity);
-  //$('#addCity').click(sendNewRequest);
   $('#prevCities').on("click", '.fullForecast', forecastRequest);
   $('#prevCities').on("click", ".remove", removeCity);
 });
@@ -14,14 +13,11 @@ $(function(){
 function removeCity(e){
   e.preventDefault();
   var city = this.closest('div').getElementsByClassName('prevNameOfCity')[0].innerHTML;
-
-  console.log("index:", cities.indexOf(city));
   for(var i = 0; i < cities.length; i++) {
     if(city.toLowerCase() === cities[i].toLowerCase()){
       cities.splice(i, 1);
     }
   }
-  console.log('cities', cities);
   saveToLocalStorage();
   $(this).closest('.row')[0].remove();
 }
@@ -30,13 +26,11 @@ function forecastRequest(e){
   e.preventDefault();
   var city = this.closest('div').getElementsByClassName('prevNameOfCity')[0].innerHTML;
   var $this = $(this);
-  (console.log('city', city));
 
   $.ajax({                          // 3 day forecast data
     method: 'GET',
     url: `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&units=imperial&cnt=3&appid=38f758398b969dbe1c4c60ee16c5e6ff`,
     success: function(weather3Days) {
-      console.log('weather3Days:', weather3Days);
       weather3DaysCard(weather3Days, $this);
     },
     error: function () {
@@ -81,7 +75,6 @@ function weather3DaysCard(data, $this){
   } else {
     $this.closest('.card').find('.threeDaysForecast').toggleClass('hidden');
   }
-
 }
 
 function prevWeatherCard(data){
@@ -131,7 +124,6 @@ function addCity(e) {
   if(cities.indexOf(newCity) === -1 ){
     cities.push(newCity);
     prevCityRequest(newCity);
-
     saveToLocalStorage();
     $('#newCity').val('');
   }

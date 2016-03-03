@@ -10,7 +10,7 @@
   <h1 class="header1">Weather Tracker</h1>
   <div class="form-inline" id='inputSection'>
     <div class="form-group">
-<!--       <label for="">Find a City:</label> -->
+      <!--       <label for="">Find a City:</label> -->
       <input type="text" class="form-control text-center" id="newCity" placeholder="Find a City">
     </div>
     <button type="submit" id="addCity" class="btn btn-default">Find</button>
@@ -18,38 +18,37 @@
 
   <div class="container-fluid" id="prevCities">
     <div class="row card" id="template">
-      <div class="prevNameOfCity col-xs-4 col-md-3 col-md-offset-3">Minneapolis</div>
-      <img class="icon col-xs-2 col-xs-offset-3 col-md-2 col-md-offset-1" src="http://openweathermap.org/img/w/11d.png" />
-      <div class="preTemp col-xs-2 col-xs-offset-0 col-md-2 col-md-offset-0"><span id="prevTemp">45</span> °F</div>
-      <button class="remove col-xs-1 col-md-1 col-md-offset-0"><span class="delete glyphicon glyphicon-remove-circle"></span></button>
-      <button class="row fullForecast col-xs-4 col-xs-offset-3 col-md-6 col-md-offset-5"><u>3 Day Forecast</u></button>
+      <div class="prevNameOfCity col-xs-5 col-sm-4 col-md-3 col-md-offset-3">Minneapolis</div>
+      <img class="icon col-xs-3 col-xs-offset-0 col-sm-2 col-sm-offset-3 col-md-2 col-md-offset-1" src="http://openweathermap.org/img/w/11d.png" />
+      <div class="preTemp col-xs-3 col-xs-offset-0 col-sm-2 col-sm-offset-0 col-md-2 col-md-offset-0"><span id="prevTemp">45</span> °F</div>
+      <button class="remove col-xs-12 col-sm-1 col-md-1 col-md-offset-0"><span class="delete glyphicon glyphicon-remove-circle"></span></button>
+      <button class="row fullForecast col-xs-6 col-xs-offset-3 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-5"><u>3 Day Forecast</u></button>
       <div class="forecast3Days row" style="visibility: visible">  <!-- toggle between hidden & visible --><div class="row col-md-6 col-md-offset-0"></div>
-        <div class="forecastTitle col-md-2 col-md-offset-5"></div>
-      </div>
+      <div class="forecastTitle col-md-2 col-md-offset-5"></div>
+    </div>
 
-      <div class="fcW">
-        <div class="row" id="template3">
-          <div class="width uno col-md-2 col-md-offset-3">
-            <span class="minTemp1">71</span> 
-            <span> / </span> 
-            <span class="maxTemp1">89</span>
-            <img class="icon1" src="http://openweathermap.org/img/w/11d.png" />
-          </div>
-          <div class="width dos col-md-2 col-md-offset-0">
-            <span class="minTemp2">71</span> 
-            <span> / </span> 
-            <span class="maxTemp2">89</span>
-            <img class="icon2" src="http://openweathermap.org/img/w/11d.png" />
-          </div>
-          <div class="width tres col-md-2 col-md-offset-0">
-            <span class="minTemp3">71</span> 
-            <span> / </span> 
-            <span class="maxTemp3">89</span>
-            <img class="icon3" src="http://openweathermap.org/img/w/11d.png" />
-          </div>
+    <div class="fcW">
+      <div class="row" id="template3">
+        <div class="width uno col-xs-9 col-xs-offset-3 col-md-2 col-md-offset-3">
+          <span class="minTemp1">71</span> 
+          <span> / </span> 
+          <span class="maxTemp1">89</span>
+          <img class="icon1" src="http://openweathermap.org/img/w/11d.png" />
+        </div>
+        <div class="width dos col-xs-9 col-xs-offset-3 col-md-2 col-md-offset-0">
+          <span class="minTemp2">71</span> 
+          <span> / </span> 
+          <span class="maxTemp2">89</span>
+          <img class="icon2" src="http://openweathermap.org/img/w/11d.png" />
+        </div>
+        <div class="width tres col-xs-9 col-xs-offset-3 col-md-2 col-md-offset-0">
+          <span class="minTemp3">71</span> 
+          <span> / </span> 
+          <span class="maxTemp3">89</span>
+          <img class="icon3" src="http://openweathermap.org/img/w/11d.png" />
         </div>
       </div>
-
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
